@@ -5,3 +5,9 @@ def text_blocks(response):
             if block['type'] == 'text':
                 result.append(block['text'])
     return result
+
+
+def text_of(response):
+    text = text_blocks(response)
+    res = '\n'.join(text)
+    return res.strip()
