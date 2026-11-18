@@ -27,3 +27,12 @@ def wants_tool(response):
         if response['stop_reason'] == 'tool_use':
             return True
     return False
+
+
+def assistant_message(response):
+    res = {'role': 'assistant'}
+    if response.get('content'):
+        res['content'] = response['content']
+    else:
+        res['content'] = []
+    return res
