@@ -20,3 +20,10 @@ def tool_uses(response):
             if b['type'] == 'tool_use':
                 res.append(b)
     return res
+
+
+def wants_tool(response):
+    if response.get('stop_reason'):
+        if response['stop_reason'] == 'tool_use':
+            return True
+    return False
