@@ -15,3 +15,13 @@ def retry_after(headers):
             if headers['Retry-After'].isdigit():
                 return headers['Retry-After']
     return
+
+
+def call_with_retry(fn, attempts=4, base=0.5, sleep=time.sleep):
+    for attempt in range(attempts):
+        try:
+            return fn()
+        except APIError as exc:
+            if not is_retryable(exc) or attempt == attempts - 1:
+                raise
+            sleep(backoff_delay(attempt, base))
