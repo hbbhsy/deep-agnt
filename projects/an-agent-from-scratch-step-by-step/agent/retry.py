@@ -7,3 +7,11 @@ def is_retryable(error):
 
 def backoff_delay(attempt, base=0.5):
     return base * 2 ** attempt
+
+
+def retry_after(headers):
+    if headers is not None:
+        if headers.get('Retry-After'):
+            if headers['Retry-After'].isdigit():
+                return headers['Retry-After']
+    return
