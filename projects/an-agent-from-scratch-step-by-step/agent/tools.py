@@ -22,3 +22,12 @@ def tool_spec(name, description, params):
                 'required':required_params(params)
                 }
             }
+
+
+def tool_result(tool_use_id, content, is_error=False):
+    res = {"type": "tool_result"}
+    res['tool_use_id'] = tool_use_id
+    res['content'] = str(content)
+    if is_error:
+        res['is_error'] = True
+    return res
