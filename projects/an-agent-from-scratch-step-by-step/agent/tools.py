@@ -31,3 +31,20 @@ def tool_result(tool_use_id, content, is_error=False):
     if is_error:
         res['is_error'] = True
     return res
+
+
+def run_tool(block, registry):
+    tool_id = block['id']
+    name = block['name']
+
+    if name in registry:
+        try:
+            content = registry[name](**block['input'])
+            is_error = False
+        except Exception as err: 
+            content = f'{type(err).__name__}: {err}'
+            is_error = True
+    else:
+        content = f"unknown tool '{name}'"
+        is_error = True
+    return tool_result(tool_id, content, is_error)
