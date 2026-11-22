@@ -17,3 +17,15 @@ def handle_tool_turn(reply, messages, tools):
     messages.append(results_message(results))
 
     return results
+
+
+def run_agent(task, model, tools, specs, max_turns=6):
+    messages = [user_message(task)]
+    for i in range(max_turns):
+        reply = model.chat(messages, tools=specs)
+        if wants_tool(reply):
+            results = handle_tool_turn(reply, messages, tools)
+            # return results
+        else:
+            return text_of(reply)
+    return
