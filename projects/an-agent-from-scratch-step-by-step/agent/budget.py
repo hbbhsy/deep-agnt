@@ -19,3 +19,11 @@ def exceeded(budget, max_calls=None, max_tokens=None):
         return f'tokens: {budget.tokens} of {max_tokens}'
     else:
         return
+
+
+def check_budget(budget, max_calls=None, max_tokens=None):
+    message = exceeded(budget, max_calls, max_tokens)
+    if message:
+        raise BudgetExceeded(message)
+    else:
+        return
