@@ -7,3 +7,44 @@ def parse_trace_line(line):
     rest = rest.strip()
 
     return n, rest
+
+
+
+def turn_stats(summary):
+    res = []
+    turns = {}
+
+    for line in summary.splitlines():
+        parsed = parse_trace_line(line)
+
+        if parsed is None:
+            continue
+
+        n, rest = parsed
+
+        if n not in turns:
+            turns[n] = {
+                "turn": n,
+                "stop": None,
+                "in": None,
+                "out": None,
+                "errors": 0
+            }
+
+        if rest.startswith("> tool_result error"):
+            turns[n]["errors"] += 1
+
+        elif rest.startswith("stop="):
+            result = dict(
+                item.split("=", 1)
+                for item in rest.split()
+            )
+
+            turns[n]["stop"] = result["stop"]
+            turns[n]["in"] = int(result["in"])
+            turns[n]["out"] = int(result["out"])
+
+    for n in sorted(turns):
+        res.append(turns[n])
+
+    return res
