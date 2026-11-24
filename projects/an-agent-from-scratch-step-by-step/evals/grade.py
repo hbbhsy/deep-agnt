@@ -70,3 +70,17 @@ def total_calls(summary):
             res = line.split('=')[1]
             return int(res.split()[0])
     return 0
+
+
+def grade_run(expected, actual, summary):
+    if expected and actual:
+        expected = expected.lower()
+        actual = actual.lower()
+        passed = (expected.strip() == actual.strip())
+    else:
+        passed = False
+    
+    calls = total_calls(summary)
+    first_bad_turn = first_error_turn(summary)
+
+    return {'passed': passed, 'calls':calls, 'first_bad_turn': first_bad_turn}
