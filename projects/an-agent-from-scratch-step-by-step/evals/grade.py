@@ -84,3 +84,13 @@ def grade_run(expected, actual, summary):
     first_bad_turn = first_error_turn(summary)
 
     return {'passed': passed, 'calls':calls, 'first_bad_turn': first_bad_turn}
+
+
+def pass_rate(results):
+    if results == []:
+        return 0.0
+    true_count = 0
+    for p in results:
+        if p['passed'] == True:
+            true_count += 1
+    return round(true_count / len(results),2)
