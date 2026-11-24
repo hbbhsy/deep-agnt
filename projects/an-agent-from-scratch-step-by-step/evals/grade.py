@@ -58,3 +58,15 @@ def first_error_turn(summary):
         else:
             continue
     return
+
+
+def total_calls(summary):
+    if summary == "":
+        return 0
+
+    lines = summary.splitlines()
+    for line in lines:
+        if line.startswith('total calls='):
+            res = line.split('=')[1]
+            return int(res.split()[0])
+    return 0
