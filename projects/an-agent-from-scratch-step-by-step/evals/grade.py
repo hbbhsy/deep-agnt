@@ -48,3 +48,13 @@ def turn_stats(summary):
         res.append(turns[n])
 
     return res
+
+
+def first_error_turn(summary):
+    traces = turn_stats(summary)
+    for t in traces:
+        if t['errors'] > 0:
+            return t['turn']
+        else:
+            continue
+    return
